@@ -1,122 +1,195 @@
-# diabetes-prediction
-Diabetes prediction web app using Machine Learning (LR, KNN, Decision Tree, Random Forest) — Pima Indians Dataset
+# 🩺 Diabetes Prediction using Machine Learning
 
-# 🩺 Diabetes Prediction — Machine Learning Classification
+Proyek Akhir Mata Kuliah **Kecerdasan Artifisial Lanjut**
 
-> Proyek Akhir Mata Kuliah **Kecerdasan Artifisial Lanjut**  
-> Dataset: Pima Indians Diabetes | Kelompok 6
+Proyek ini bertujuan untuk membangun model machine learning untuk memprediksi kemungkinan seseorang menderita diabetes berdasarkan data kesehatan pada **Pima Indians Diabetes Dataset**. Proyek mencakup seluruh tahapan machine learning mulai dari preprocessing data, eksplorasi data, pelatihan model, evaluasi performa, hingga implementasi dashboard prediksi menggunakan Streamlit.
 
 ---
 
-## 👥 Anggota Kelompok
+## 👥 Anggota Kelompok 6
 
-| Nama | Divisi |
-|------|--------|
-| Sabrina Khairunnisa | Data Cleaning, Preprocessing, Integrasi Notebook |
-| Shafa Rizwana | EDA dan Visualisasi Data |
-| Anindhita Faiza | Training Model Machine Learning |
-| Aisha Maryam | Evaluasi Model dan Analisis Metrik |
-| Latifah Puti | Hyperparameter Tuning & Perbandingan Model |
+| Nama                | Tanggung Jawab                                  |
+| ------------------- | ----------------------------------------------- |
+| Sabrina Khairunnisa | Data Cleaning, Preprocessing                    |
+| Shafa Rizwana       | Exploratory Data Analysis (EDA) dan Visualisasi |
+| Anindhita Faiza     | Training Model Machine Learning                 |
+| Aisha Maryam        | Evaluasi Model dan Analisis Metrik              |
+| Latifah Puti        | Hyperparameter Tuning dan Perbandingan Model    |
 
 ---
 
-## 📁 Struktur Repository
+## 📂 Struktur Repository
 
-```
+```text
 diabetes-prediction/
 │
-├── data/
-│   └── diabetes.csv              # Dataset Pima Indians Diabetes
+├── README.md
+├── requirements.txt
 │
-├── notebook/
-│   └── diabetes_prediction.ipynb # Notebook Google Colab lengkap
+├── data/
+│   └── diabetes.csv
 │
 ├── src/
-│   ├── preprocessing.py          # Fungsi cleaning & preprocessing
-│   ├── train.py                  # Training & simpan model
-│   └── predict.py                # Fungsi prediksi
+│   ├── preprocessing.py
+│   ├── train.py
+│   ├── evaluate.py
+│   ├── tuning.py
+│   └── predict.py
 │
 ├── model/
-│   └── model.pkl                 # Model Random Forest tersimpan
+│   └── README.md
 │
-├── dashboard/
-│   └── app.py                    # Dashboard Streamlit
-│
-├── requirements.txt              # Daftar library
-└── README.md                     # Dokumentasi ini
+└── dashboard/
+    └── app.py
 ```
 
 ---
 
 ## 📊 Dataset
 
-- **Sumber**: Pima Indians Diabetes Database (UCI / Kaggle)
-- **Jumlah data**: 768 baris, 9 kolom
-- **Fitur**: Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age
-- **Target**: Outcome (0 = Tidak Diabetes, 1 = Diabetes)
+Dataset yang digunakan adalah **Pima Indians Diabetes Dataset** yang tersedia melalui UCI Machine Learning Repository dan Kaggle.
+
+### Informasi Dataset
+
+* Jumlah data: 768 observasi
+* Jumlah fitur: 8
+* Target: Outcome
+
+  * 0 = Tidak Diabetes
+  * 1 = Diabetes
+
+### Fitur
+
+* Pregnancies
+* Glucose
+* BloodPressure
+* SkinThickness
+* Insulin
+* BMI
+* DiabetesPedigreeFunction
+* Age
 
 ---
 
-## 🤖 Model yang Digunakan
+## ⚙️ Tahapan Machine Learning
 
-| Model | Keterangan |
-|-------|-----------|
-| Logistic Regression | Klasifikasi berbasis fungsi sigmoid |
-| K-Nearest Neighbors | Klasifikasi berbasis jarak ke tetangga |
-| Decision Tree | Pohon keputusan berbasis Gini Impurity |
-| Random Forest | Ensemble dari banyak Decision Tree |
+### 1. Data Preprocessing
+
+* Mengubah nilai 0 menjadi NaN pada fitur tertentu
+* Menangani missing value menggunakan class-based mean imputation
+* Normalisasi data menggunakan StandardScaler
+
+### 2. Exploratory Data Analysis
+
+* Distribusi kelas diabetes
+* Boxplot untuk mendeteksi outlier
+* Correlation heatmap
+* Analisis statistik deskriptif
+
+### 3. Training Model
+
+Model yang digunakan:
+
+* Logistic Regression
+* K-Nearest Neighbors (KNN)
+* Decision Tree
+* Random Forest
+
+### 4. Evaluasi Model
+
+Metode evaluasi:
+
+* Accuracy
+* Precision
+* Recall
+* F1-Score
+* Classification Report
+* Confusion Matrix
+* Cross Validation
+
+### 5. Hyperparameter Tuning
+
+Dilakukan pada model Random Forest untuk meningkatkan performa model.
 
 ---
 
 ## 📈 Hasil Evaluasi
 
-| Model | Accuracy | Precision | Recall | F1-Score |
-|-------|----------|-----------|--------|----------|
-| Logistic Regression | ~77% | - | - | - |
-| KNN | ~74% | - | - | - |
-| Decision Tree | ~72% | - | - | - |
-| **Random Forest** | **~79%** | - | - | - |
+| Model               | Accuracy |
+| ------------------- | -------- |
+| Logistic Regression | 75.97%   |
+| KNN                 | 85.71%   |
+| Decision Tree       | 89.61%   |
+| Random Forest       | 86.36%   |
 
-> *Isi tabel dengan hasil aktual setelah menjalankan notebook*
+### Cross Validation
+
+Mean Cross Validation Score:
+
+```text
+0.8763
+```
+
+Model dengan performa terbaik berdasarkan pengujian adalah **Decision Tree** dengan akurasi sebesar **89.61%**, sedangkan Random Forest memberikan performa yang lebih stabil berdasarkan hasil cross validation.
 
 ---
 
-## 🚀 Cara Menjalankan
+## 🚀 Cara Menjalankan Proyek
 
-### 1. Clone repository
+### Clone Repository
+
 ```bash
-git clone https://github.com/username/diabetes-prediction.git
+git clone https://github.com/USERNAME/diabetes-prediction.git
 cd diabetes-prediction
 ```
 
-### 2. Install dependencies
+### Install Dependency
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Jalankan notebook (Google Colab)
-- Upload folder ke Google Drive
-- Buka `notebook/diabetes_prediction.ipynb` di Google Colab
-- Runtime > Run All
+### Jalankan Training
 
-### 4. Jalankan dashboard lokal
 ```bash
-cd dashboard
-streamlit run app.py
+python src/train.py
+```
+
+### Jalankan Evaluasi
+
+```bash
+python src/evaluate.py
+```
+
+### Jalankan Dashboard
+
+```bash
+streamlit run dashboard/app.py
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Library yang Digunakan
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3-orange)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.28-red)
-![Pandas](https://img.shields.io/badge/Pandas-2.0-green)
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* Seaborn
+* Scikit-Learn
+* Streamlit
+
+---
+
+## 🎯 Tujuan Proyek
+
+* Menerapkan konsep machine learning klasifikasi.
+* Membandingkan performa beberapa algoritma klasifikasi.
+* Mengevaluasi model menggunakan berbagai metrik evaluasi.
+* Mengembangkan dashboard sederhana untuk prediksi diabetes.
 
 ---
 
 ## 📝 Lisensi
 
-Proyek ini dibuat untuk keperluan akademik — Mata Kuliah Kecerdasan Artifisial Lanjut.
-
+Proyek ini dibuat untuk keperluan akademik pada Mata Kuliah **Kecerdasan Artifisial Lanjut**.
