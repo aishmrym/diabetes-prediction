@@ -139,7 +139,7 @@ Model dengan performa terbaik berdasarkan pengujian adalah **Decision Tree** den
 ### Clone Repository
 
 ```bash
-git clone https://github.com/USERNAME/diabetes-prediction.git
+git clone https://github.com/aishmrym/diabetes-prediction.git
 cd diabetes-prediction
 ```
 
