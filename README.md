@@ -11,7 +11,7 @@ Proyek ini bertujuan untuk membangun model machine learning untuk memprediksi ke
 | Nama                | Tanggung Jawab                                   |
 | ------------------- | ------------------------------------------------ |
 | Sabrina Khairunnisa | Data Cleaning, Preprocessing                     |
-| Shafa Rizwana       | Exploratory Data Analysis (EDA)                  |
+| Shafa Rizwana       | Exploratory Data Analysis (EDA) Visualisasi      |
 | Anindhita Faiza     | Training Model Machine Learning                  |
 | Aisha Maryam        | Evaluasi Model dan Analisis Metrik & Visualisasi |
 | Latifah Puti        | Hyperparameter Tuning dan Perbandingan Model     |
