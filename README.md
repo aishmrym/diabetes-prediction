@@ -136,14 +136,14 @@ Model dengan performa terbaik berdasarkan pengujian adalah **Decision Tree** den
 
 ## 🚀 Cara Menjalankan Proyek
 
-### Clone Repository
+### Clone Repository (kalau mau menjalankan di local)
 
 ```bash
 git clone https://github.com/aishmrym/diabetes-prediction.git
 cd diabetes-prediction
 ```
 
-### Install Dependency
+### Install Dependency (kalau di codespace langsung ini aja)
 
 ```bash
 pip install -r requirements.txt
