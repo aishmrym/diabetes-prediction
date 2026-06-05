@@ -1,15 +1,94 @@
 import streamlit as st
+import numpy as np
+import pickle
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+model = pickle.load(
+    open(BASE_DIR / "model" / "diabetes_model.pkl", "rb")
+)
+
+scaler = pickle.load(
+    open(BASE_DIR / "model" / "scaler.pkl", "rb")
+)
 
 st.title("🩺 Diabetes Prediction")
 
-pregnancies = st.number_input("Pregnancies", 0, 20)
-glucose = st.number_input("Glucose", 0, 300)
-blood_pressure = st.number_input("Blood Pressure", 0, 200)
-skin_thickness = st.number_input("Skin Thickness", 0, 100)
-insulin = st.number_input("Insulin", 0, 1000)
-bmi = st.number_input("BMI", 0.0, 70.0)
-dpf = st.number_input("Diabetes Pedigree Function", 0.0, 3.0)
-age = st.number_input("Age", 1, 120)
+pregnancies = st.number_input(
+    "Pregnancies",
+    min_value=0,
+    max_value=20,
+    value=1
+)
+
+glucose = st.number_input(
+    "Glucose",
+    min_value=0,
+    max_value=300,
+    value=120
+)
+
+blood_pressure = st.number_input(
+    "Blood Pressure",
+    min_value=0,
+    max_value=200,
+    value=70
+)
+
+skin_thickness = st.number_input(
+    "Skin Thickness",
+    min_value=0,
+    max_value=100,
+    value=20
+)
+
+insulin = st.number_input(
+    "Insulin",
+    min_value=0,
+    max_value=1000,
+    value=80
+)
+
+bmi = st.number_input(
+    "BMI",
+    min_value=0.0,
+    max_value=70.0,
+    value=25.0
+)
+
+dpf = st.number_input(
+    "Diabetes Pedigree Function",
+    min_value=0.0,
+    max_value=3.0,
+    value=0.5
+)
+
+age = st.number_input(
+    "Age",
+    min_value=1,
+    max_value=120,
+    value=30
+)
 
 if st.button("Predict"):
-    st.success("Prediksi akan ditampilkan di sini")
+
+    data = np.array([[
+        pregnancies,
+        glucose,
+        blood_pressure,
+        skin_thickness,
+        insulin,
+        bmi,
+        dpf,
+        age
+    ]])
+
+    data_scaled = scaler.transform(data)
+
+    prediction = model.predict(data_scaled)
+
+    if prediction[0] == 1:
+        st.error("⚠️ Hasil Prediksi: Diabetes")
+    else:
+        st.success("✅ Hasil Prediksi: Tidak Diabetes")

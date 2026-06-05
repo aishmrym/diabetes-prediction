@@ -1,11 +1,16 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+from pathlib import Path
 
-# load dataset
-df = pd.read_csv('../data/diabetes.csv')
+# Path dataset
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_PATH = BASE_DIR / "data" / "diabetes.csv"
 
-# kolom yang tidak boleh bernilai 0
+# Load dataset
+df = pd.read_csv(DATA_PATH)
+
+# Kolom yang tidak boleh bernilai 0
 kolom = [
     'Glucose',
     'BloodPressure',
@@ -14,11 +19,11 @@ kolom = [
     'BMI'
 ]
 
-# ubah 0 menjadi NaN
+# Ubah 0 menjadi NaN
 for col in kolom:
     df[col] = df[col].replace(0, np.nan)
 
-# handling missing value
+# Handling missing value
 for col in kolom:
     df.loc[
         (df['Outcome'] == 0) & (df[col].isna()),
@@ -30,12 +35,12 @@ for col in kolom:
         col
     ] = df[df['Outcome'] == 1][col].mean()
 
-# feature dan target
+# Feature dan target
 X = df.drop('Outcome', axis=1)
 y = df['Outcome']
 
-# normalisasi
+# Normalisasi
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-print("Preprocessing selesai")
+print("✅ Preprocessing selesai")
