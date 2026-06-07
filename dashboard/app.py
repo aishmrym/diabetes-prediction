@@ -3,31 +3,23 @@ import numpy as np
 import pickle
 from pathlib import Path
 
-# ==========================
-# CONFIG PAGE
-# ==========================
+# =====================================
+# PAGE CONFIG
+# =====================================
 st.set_page_config(
     page_title="Diabetes Prediction",
     page_icon="🩺",
     layout="wide"
 )
 
-# ==========================
+# =====================================
 # CUSTOM CSS
-# ==========================
+# =====================================
 st.markdown("""
 <style>
 
 .main {
     padding-top: 1rem;
-}
-
-.result-box {
-    padding: 20px;
-    border-radius: 15px;
-    background-color: #f8f9fa;
-    text-align: center;
-    margin-top: 20px;
 }
 
 .stButton > button {
@@ -38,12 +30,18 @@ st.markdown("""
     border-radius: 12px;
 }
 
+[data-testid="metric-container"] {
+    border: 1px solid #e6e6e6;
+    padding: 15px;
+    border-radius: 10px;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
-# ==========================
+# =====================================
 # LOAD MODEL
-# ==========================
+# =====================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 model = pickle.load(
@@ -54,18 +52,18 @@ scaler = pickle.load(
     open(BASE_DIR / "model" / "scaler.pkl", "rb")
 )
 
-# ==========================
+# =====================================
 # SIDEBAR
-# ==========================
+# =====================================
 st.sidebar.title("ℹ️ Model Information")
 
 st.sidebar.success("Random Forest Classifier")
 
-st.sidebar.write("""
-Dataset:
-- Pima Indians Diabetes
+st.sidebar.markdown("""
+### Dataset
+Pima Indians Diabetes Dataset
 
-Features:
+### Features
 - Pregnancies
 - Glucose
 - Blood Pressure
@@ -74,23 +72,29 @@ Features:
 - BMI
 - Diabetes Pedigree Function
 - Age
+
+### Model Performance
+Accuracy: **86.36%**
+
+### Team
+Kelompok 6
 """)
 
-# ==========================
+# =====================================
 # HEADER
-# ==========================
+# =====================================
 st.title("🩺 Diabetes Prediction Dashboard")
 
 st.markdown("""
-Predict the likelihood of diabetes using a trained
-Machine Learning model based on patient medical data.
+Predict the likelihood of diabetes using a Machine Learning model
+trained on the Pima Indians Diabetes Dataset.
 """)
 
 st.divider()
 
-# ==========================
+# =====================================
 # INPUT FORM
-# ==========================
+# =====================================
 col1, col2 = st.columns(2)
 
 with col1:
@@ -153,9 +157,9 @@ with col2:
         value=30
     )
 
-# ==========================
+# =====================================
 # PREDICTION
-# ==========================
+# =====================================
 if st.button("🔍 Predict Diabetes Risk"):
 
     data = np.array([[
@@ -179,10 +183,35 @@ if st.button("🔍 Predict Diabetes Risk"):
 
     st.divider()
 
-    st.metric(
-        label="Probability of Diabetes",
-        value=f"{diabetes_prob:.2f}%"
-    )
+    metric1, metric2 = st.columns(2)
+
+    with metric1:
+        st.metric(
+            "Probability of Diabetes",
+            f"{diabetes_prob:.2f}%"
+        )
+
+    with metric2:
+
+        if diabetes_prob < 30:
+            st.metric(
+                "Risk Level",
+                "🟢 Low"
+            )
+
+        elif diabetes_prob < 70:
+            st.metric(
+                "Risk Level",
+                "🟡 Medium"
+            )
+
+        else:
+            st.metric(
+                "Risk Level",
+                "🔴 High"
+            )
+
+    st.divider()
 
     if prediction[0] == 1:
 
@@ -190,8 +219,25 @@ if st.button("🔍 Predict Diabetes Risk"):
             f"⚠️ High Risk of Diabetes ({diabetes_prob:.2f}%)"
         )
 
+        st.warning("""
+        The model predicts that the patient may have diabetes.
+
+        This result is based on the input features provided and should
+        not be considered a medical diagnosis.
+
+        Please consult a healthcare professional for proper examination
+        and diagnosis.
+        """)
+
     else:
 
         st.success(
             f"✅ Low Risk of Diabetes ({diabetes_prob:.2f}%)"
         )
+
+        st.info("""
+        The model predicts that the patient is unlikely to have diabetes.
+
+        Continue maintaining a healthy lifestyle, including balanced
+        nutrition, regular physical activity, and routine health checkups.
+        """)
