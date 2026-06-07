@@ -181,6 +181,19 @@ if st.button("🔍 Predict Diabetes Risk"):
 
     diabetes_prob = probability[0][1] * 100
 
+    # =========================
+    # Risk Level
+    # =========================
+
+    if diabetes_prob < 30:
+        risk_level = "🟢 LOW"
+
+    elif diabetes_prob < 70:
+        risk_level = "🟡 MEDIUM"
+
+    else:
+        risk_level = "🔴 HIGH"
+
     st.divider()
 
     metric1, metric2 = st.columns(2)
@@ -192,52 +205,49 @@ if st.button("🔍 Predict Diabetes Risk"):
         )
 
     with metric2:
-
-        if diabetes_prob < 30:
-            st.metric(
-                "Risk Level",
-                "🟢 Low"
-            )
-
-        elif diabetes_prob < 70:
-            st.metric(
-                "Risk Level",
-                "🟡 Medium"
-            )
-
-        else:
-            st.metric(
-                "Risk Level",
-                "🔴 High"
-            )
+        st.metric(
+            "Risk Level",
+            risk_level
+        )
 
     st.divider()
+
+    # =========================
+    # Final Result
+    # =========================
 
     if prediction[0] == 1:
 
         st.error(
-            f"⚠️ High Risk of Diabetes ({diabetes_prob:.2f}%)"
+            "⚠️ HASIL PREDIKSI: TERINDIKASI DIABETES"
         )
 
+        st.markdown(f"""
+### Probabilitas Diabetes: **{diabetes_prob:.2f}%**
+
+Model memprediksi bahwa pasien memiliki indikasi diabetes berdasarkan data yang dimasukkan.
+""")
+
         st.warning("""
-        The model predicts that the patient may have diabetes.
+Disarankan untuk melakukan pemeriksaan lebih lanjut dan berkonsultasi dengan tenaga medis.
 
-        This result is based on the input features provided and should
-        not be considered a medical diagnosis.
-
-        Please consult a healthcare professional for proper examination
-        and diagnosis.
-        """)
+Hasil prediksi ini hanya merupakan bantuan analisis berbasis Machine Learning dan bukan diagnosis medis resmi.
+""")
 
     else:
 
         st.success(
-            f"✅ Low Risk of Diabetes ({diabetes_prob:.2f}%)"
+            "✅ HASIL PREDIKSI: TIDAK TERINDIKASI DIABETES"
         )
 
-        st.info("""
-        The model predicts that the patient is unlikely to have diabetes.
+        st.markdown(f"""
+### Probabilitas Diabetes: **{diabetes_prob:.2f}%**
 
-        Continue maintaining a healthy lifestyle, including balanced
-        nutrition, regular physical activity, and routine health checkups.
-        """)
+Model memprediksi bahwa pasien tidak terindikasi diabetes berdasarkan data yang dimasukkan.
+""")
+
+        st.info("""
+Tetap disarankan menjaga pola makan sehat, rutin berolahraga, dan melakukan pemeriksaan kesehatan secara berkala.
+
+Hasil prediksi ini hanya merupakan bantuan analisis berbasis Machine Learning dan bukan diagnosis medis resmi.
+""")
