@@ -241,14 +241,14 @@ Fitur dashboard:
 
 # 🚀 Cara Menjalankan Proyek
 
-## Clone Repository
+## Clone Repository (kalau run di local pakai ini dulu)
 
 ```bash
 git clone https://github.com/aishmrym/diabetes-prediction.git
 cd diabetes-prediction
 ```
 
-## Install Dependency
+## Install Dependency (langsung di codespace github)
 
 ```bash
 pip install -r requirements.txt
@@ -260,30 +260,11 @@ pip install -r requirements.txt
 python src/train.py
 ```
 
-Output:
-
-```text
-✅ Preprocessing selesai
-✅ Training selesai
-✅ Model berhasil disimpan
-```
-
 ## Evaluasi Model
 
 ```bash
 python src/evaluate.py
 ```
-
-Output:
-
-```text
-Accuracy
-Precision
-Recall
-F1-Score
-```
-
-untuk masing-masing model.
 
 ## Menjalankan Dashboard
 
