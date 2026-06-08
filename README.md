@@ -241,14 +241,14 @@ Fitur dashboard:
 
 # 🚀 Cara Menjalankan Proyek
 
-## Clone Repository (kalau run di local pakai ini dulu)
+## Clone Repository 
 
 ```bash
 git clone https://github.com/aishmrym/diabetes-prediction.git
 cd diabetes-prediction
 ```
 
-## Install Dependency (langsung di codespace github)
+## Install Dependency 
 
 ```bash
 pip install -r requirements.txt
