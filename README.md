@@ -13,7 +13,7 @@ Proyek ini bertujuan untuk membangun model machine learning yang mampu mempredik
 | Sabrina Khairunnisa | Data Cleaning, Preprocessing Data, Dokumentasi Dataset |
 | Shafa Rizwana | Exploratory Data Analysis (EDA), Visualisasi Data |
 | Anindhita Faiza | Training Model Machine Learning |
-| Aisha Maryam | Evaluasi Model, Analisis Metrik, Integrasi Model dengan Dashboard Streamlit |
+| Aisha Maryam | Evaluasi Model, Analisis Metrik, Integrasi dengan Dashboard Streamlit |
 | Latifah Puti | Hyperparameter Tuning dan Perbandingan Model |
 
 ---
