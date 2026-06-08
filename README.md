@@ -2,23 +2,23 @@
 
 Proyek Akhir Mata Kuliah **Kecerdasan Artifisial Lanjut**
 
-Proyek ini bertujuan untuk membangun model machine learning untuk memprediksi kemungkinan seseorang menderita diabetes berdasarkan data kesehatan pada **Pima Indians Diabetes Dataset**. Proyek mencakup seluruh tahapan machine learning mulai dari preprocessing data, eksplorasi data, pelatihan model, evaluasi performa, hingga implementasi dashboard prediksi menggunakan Streamlit.
+Proyek ini bertujuan untuk membangun model machine learning yang mampu memprediksi kemungkinan seseorang mengalami diabetes berdasarkan data kesehatan pasien menggunakan **Pima Indians Diabetes Dataset**. Proyek mencakup tahapan preprocessing data, pelatihan model klasifikasi, evaluasi performa model, perbandingan beberapa algoritma machine learning, serta implementasi dashboard interaktif menggunakan Streamlit.
 
 ---
 
-## 👥 Anggota Kelompok 6
+# 👥 Anggota Kelompok 6
 
-| Nama                | Tanggung Jawab                                   |
-| ------------------- | ------------------------------------------------ |
-| Sabrina Khairunnisa | Data Cleaning, Preprocessing                     |
-| Shafa Rizwana       | Exploratory Data Analysis (EDA) Visualisasi      |
-| Anindhita Faiza     | Training Model Machine Learning                  |
-| Aisha Maryam        | Evaluasi Model dan Analisis Metrik & Visualisasi |
-| Latifah Puti        | Hyperparameter Tuning dan Perbandingan Model     |
+| Nama | Tanggung Jawab |
+|--------|--------|
+| Sabrina Khairunnisa | Data Cleaning, Preprocessing Data, Dokumentasi Dataset |
+| Shafa Rizwana | Exploratory Data Analysis (EDA), Visualisasi Data |
+| Anindhita Faiza | Training Model Machine Learning |
+| Aisha Maryam | Pengembangan Pipeline Machine Learning, Evaluasi Model, Analisis Metrik, Integrasi Model, Dashboard Streamlit |
+| Latifah Puti | Hyperparameter Tuning dan Perbandingan Model |
 
 ---
 
-## 📂 Struktur Repository
+# 📂 Struktur Repository
 
 ```text
 diabetes-prediction/
@@ -29,6 +29,11 @@ diabetes-prediction/
 ├── data/
 │   └── diabetes.csv
 │
+├── model/
+│   ├── diabetes_model.pkl
+│   ├── scaler.pkl
+│   └── README.md
+│
 ├── src/
 │   ├── preprocessing.py
 │   ├── train.py
@@ -36,132 +41,251 @@ diabetes-prediction/
 │   ├── tuning.py
 │   └── predict.py
 │
-├── model/
-│   └── README.md
-│
 └── dashboard/
     └── app.py
 ```
 
 ---
 
-## 📊 Dataset
+# 📊 Dataset
 
 Dataset yang digunakan adalah **Pima Indians Diabetes Dataset** yang tersedia melalui UCI Machine Learning Repository dan Kaggle.
 
 ### Informasi Dataset
 
-* Jumlah data: 768 observasi
-* Jumlah fitur: 8
-* Target: Outcome
+- Jumlah data : 768 observasi
+- Jumlah fitur : 8 fitur numerik
+- Target : Outcome
 
-  * 0 = Tidak Diabetes
-  * 1 = Diabetes
+Keterangan target:
 
-### Fitur
+- 0 = Tidak Diabetes
+- 1 = Diabetes
 
-* Pregnancies
-* Glucose
-* BloodPressure
-* SkinThickness
-* Insulin
-* BMI
-* DiabetesPedigreeFunction
-* Age
+### Fitur yang Digunakan
 
----
-
-## ⚙️ Tahapan Machine Learning
-
-### 1. Data Preprocessing
-
-* Mengubah nilai 0 menjadi NaN pada fitur tertentu
-* Menangani missing value menggunakan class-based mean imputation
-* Normalisasi data menggunakan StandardScaler
-
-### 2. Exploratory Data Analysis
-
-* Distribusi kelas diabetes
-* Boxplot untuk mendeteksi outlier
-* Correlation heatmap
-* Analisis statistik deskriptif
-
-### 3. Training Model
-
-Model yang digunakan:
-
-* Logistic Regression
-* K-Nearest Neighbors (KNN)
-* Decision Tree
-* Random Forest
-
-### 4. Evaluasi Model
-
-Metode evaluasi:
-
-* Accuracy
-* Precision
-* Recall
-* F1-Score
-* Classification Report
-* Confusion Matrix
-* Cross Validation
-
-### 5. Hyperparameter Tuning
-
-Dilakukan pada model Random Forest untuk meningkatkan performa model.
+- Pregnancies
+- Glucose
+- BloodPressure
+- SkinThickness
+- Insulin
+- BMI
+- DiabetesPedigreeFunction
+- Age
 
 ---
 
-## 📈 Hasil Evaluasi
+# ⚙️ Tahapan Machine Learning
 
-| Model               | Accuracy |
-| ------------------- | -------- |
-| Logistic Regression | 75.97%   |
-| KNN                 | 85.71%   |
-| Decision Tree       | 89.61%   |
-| Random Forest       | 86.36%   |
+## 1. Data Preprocessing
 
-### Cross Validation
+Tahapan preprocessing dilakukan pada file `preprocessing.py`.
 
-Mean Cross Validation Score:
+Proses yang dilakukan:
 
-```text
-0.8763
+- Membaca dataset diabetes.csv
+- Mengidentifikasi nilai 0 yang tidak valid pada beberapa fitur medis
+- Mengubah nilai 0 menjadi missing value (NaN)
+- Melakukan imputasi missing value menggunakan rata-rata berdasarkan kelas Outcome
+- Memisahkan fitur dan target
+- Melakukan normalisasi menggunakan StandardScaler
+
+Kolom yang diproses:
+
+- Glucose
+- BloodPressure
+- SkinThickness
+- Insulin
+- BMI
+
+---
+
+## 2. Data Splitting
+
+Dataset dibagi menjadi:
+
+- Training Data : 80%
+- Testing Data : 20%
+
+Menggunakan:
+
+```python
+train_test_split(
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
 ```
 
-Model dengan performa terbaik berdasarkan pengujian adalah **Decision Tree** dengan akurasi sebesar **89.61%**, sedangkan Random Forest memberikan performa yang lebih stabil berdasarkan hasil cross validation.
+Penggunaan `stratify=y` bertujuan menjaga proporsi kelas diabetes dan non-diabetes tetap seimbang pada data train maupun test.
 
 ---
 
-## 🚀 Cara Menjalankan Proyek
+## 3. Training Model
 
-### Clone Repository (kalau mau menjalankan di local)
+Pelatihan model dilakukan pada file `train.py`.
+
+Empat algoritma klasifikasi yang digunakan:
+
+### Logistic Regression
+
+Digunakan sebagai baseline model klasifikasi linear.
+
+### K-Nearest Neighbors (KNN)
+
+Menggunakan:
+
+- n_neighbors = 3
+- weights = distance
+- Manhattan Distance (p = 1)
+
+### Decision Tree
+
+Menggunakan:
+
+- criterion = entropy
+- max_depth = 4
+- min_samples_split = 4
+
+### Random Forest
+
+Menggunakan:
+
+- n_estimators = 200
+- max_depth = 6
+- min_samples_split = 4
+- max_features = sqrt
+
+Model Random Forest kemudian disimpan dalam bentuk file:
+
+```text
+model/diabetes_model.pkl
+```
+
+Scaler hasil preprocessing juga disimpan:
+
+```text
+model/scaler.pkl
+```
+
+---
+
+## 4. Evaluasi Model
+
+Evaluasi dilakukan pada file `evaluate.py`.
+
+Metrik evaluasi yang digunakan:
+
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+
+---
+
+# 📈 Hasil Evaluasi Model
+
+| Model | Accuracy | Precision | Recall | F1-Score |
+|---------|---------|---------|---------|---------|
+| Logistic Regression | 75.97% | 61.97% | 81.48% | 70.40% |
+| KNN | 85.71% | 79.63% | 79.63% | 79.63% |
+| Decision Tree | 89.61% | 78.79% | 96.30% | 86.67% |
+| Random Forest | 85.06% | 76.27% | 83.33% | 79.65% |
+
+### Model Terbaik
+
+Berdasarkan hasil pengujian, model **Decision Tree** memperoleh akurasi tertinggi sebesar **89.61%**.
+
+Model **Random Forest** dipilih untuk implementasi dashboard karena memberikan performa yang baik, lebih stabil terhadap variasi data, serta mampu menghasilkan probabilitas prediksi yang digunakan dalam visualisasi tingkat risiko diabetes.
+
+---
+
+## 5. Perbandingan Model
+
+File `tuning.py` digunakan untuk membandingkan performa model melalui visualisasi accuracy menggunakan bar chart.
+
+Model yang dibandingkan:
+
+- Logistic Regression
+- KNN
+- Decision Tree
+- Random Forest
+
+Visualisasi dibuat menggunakan:
+
+- Matplotlib
+- Seaborn
+
+---
+
+# 🖥️ Dashboard Streamlit
+
+Dashboard dibangun menggunakan Streamlit pada file:
+
+```text
+dashboard/app.py
+```
+
+Fitur dashboard:
+
+- Input data pasien secara interaktif
+- Prediksi diabetes secara real-time
+- Menampilkan probabilitas diabetes
+- Menampilkan tingkat risiko (Low, Medium, High)
+- Menampilkan hasil akhir prediksi:
+  - Terindikasi Diabetes
+  - Tidak Terindikasi Diabetes
+- Menampilkan informasi model dan dataset
+
+---
+
+# 🚀 Cara Menjalankan Proyek
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/aishmrym/diabetes-prediction.git
 cd diabetes-prediction
 ```
 
-### Install Dependency (kalau di codespace langsung ini aja)
+## Install Dependency
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Jalankan Training
+## Training Model
 
 ```bash
 python src/train.py
 ```
 
-### Jalankan Evaluasi
+Output:
+
+```text
+✅ Preprocessing selesai
+✅ Training selesai
+✅ Model berhasil disimpan
+```
+
+## Evaluasi Model
 
 ```bash
 python src/evaluate.py
 ```
 
-### Jalankan Dashboard
+Output:
+
+```text
+Accuracy
+Precision
+Recall
+F1-Score
+```
+
+untuk masing-masing model.
+
+## Menjalankan Dashboard
 
 ```bash
 streamlit run dashboard/app.py
@@ -169,27 +293,37 @@ streamlit run dashboard/app.py
 
 ---
 
-## 🛠️ Library yang Digunakan
+# 🛠️ Library yang Digunakan
 
-* Python
-* Pandas
-* NumPy
-* Matplotlib
-* Seaborn
-* Scikit-Learn
-* Streamlit
-
----
-
-## 🎯 Tujuan Proyek
-
-* Menerapkan konsep machine learning klasifikasi.
-* Membandingkan performa beberapa algoritma klasifikasi.
-* Mengevaluasi model menggunakan berbagai metrik evaluasi.
-* Mengembangkan dashboard sederhana untuk prediksi diabetes.
+- Python
+- Pandas
+- NumPy
+- Scikit-Learn
+- Matplotlib
+- Seaborn
+- Streamlit
+- Pickle
 
 ---
 
-## 📝 Lisensi
+# 🎯 Tujuan Proyek
 
-Proyek ini dibuat untuk keperluan akademik pada Mata Kuliah **Kecerdasan Artifisial Lanjut**.
+- Menerapkan konsep machine learning klasifikasi pada kasus kesehatan.
+- Membandingkan performa beberapa algoritma klasifikasi.
+- Mengevaluasi model menggunakan berbagai metrik evaluasi.
+- Mengimplementasikan model machine learning ke dalam dashboard interaktif.
+- Memberikan prediksi awal risiko diabetes berdasarkan data pasien.
+
+---
+
+# ⚠️ Disclaimer
+
+Hasil prediksi yang diberikan oleh sistem ini hanya digunakan untuk tujuan edukasi dan pembelajaran machine learning.
+
+Prediksi yang dihasilkan **bukan diagnosis medis resmi** dan tidak dapat menggantikan konsultasi dengan tenaga kesehatan profesional.
+
+---
+
+# 📝 Lisensi
+
+Proyek ini dibuat untuk keperluan akademik dalam Mata Kuliah **Kecerdasan Artifisial Lanjut**.

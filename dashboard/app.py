@@ -3,18 +3,12 @@ import numpy as np
 import pickle
 from pathlib import Path
 
-# =====================================
-# PAGE CONFIG
-# =====================================
 st.set_page_config(
     page_title="Diabetes Prediction",
     page_icon="🩺",
     layout="wide"
 )
 
-# =====================================
-# CUSTOM CSS
-# =====================================
 st.markdown("""
 <style>
 
@@ -39,9 +33,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# =====================================
 # LOAD MODEL
-# =====================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 model = pickle.load(
@@ -52,9 +44,7 @@ scaler = pickle.load(
     open(BASE_DIR / "model" / "scaler.pkl", "rb")
 )
 
-# =====================================
 # SIDEBAR
-# =====================================
 st.sidebar.title("ℹ️ Model Information")
 
 st.sidebar.success("Random Forest Classifier")
@@ -80,9 +70,7 @@ Accuracy: **86.36%**
 Kelompok 6
 """)
 
-# =====================================
 # HEADER
-# =====================================
 st.title("🩺 Diabetes Prediction Dashboard")
 
 st.markdown("""
@@ -92,9 +80,7 @@ trained on the Pima Indians Diabetes Dataset.
 
 st.divider()
 
-# =====================================
 # INPUT FORM
-# =====================================
 col1, col2 = st.columns(2)
 
 with col1:
@@ -157,9 +143,7 @@ with col2:
         value=30
     )
 
-# =====================================
 # PREDICTION
-# =====================================
 if st.button("🔍 Predict Diabetes Risk"):
 
     data = np.array([[
@@ -181,9 +165,7 @@ if st.button("🔍 Predict Diabetes Risk"):
 
     diabetes_prob = probability[0][1] * 100
 
-    # =========================
     # Risk Level
-    # =========================
 
     if diabetes_prob < 30:
         risk_level = "🟢 LOW"
@@ -212,9 +194,7 @@ if st.button("🔍 Predict Diabetes Risk"):
 
     st.divider()
 
-    # =========================
     # Final Result
-    # =========================
 
     if prediction[0] == 1:
 
